@@ -56,7 +56,7 @@ jobs:
                         }
                       }
 
-            claude_args: '--allowedTools "Bash(npm:*),Bash(sqlite3:*),mcp__playwright__browser_snapshot,mcp__playwright__browser_click"'
+          claude_args: '--allowedTools "Bash(npm:*),Bash(sqlite3:*),mcp__playwright__browser_snapshot,mcp__playwright__browser_click"'
 
 
           # This is an optional setting that allows Claude to read CI results on PRs
