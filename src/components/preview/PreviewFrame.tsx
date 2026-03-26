@@ -13,7 +13,7 @@ export function PreviewFrame() {
   const { getAllFiles, refreshTrigger } = useFileSystem();
   const [error, setError] = useState<string | null>(null);
   const [entryPoint, setEntryPoint] = useState<string>("/App.jsx");
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const isFirstLoad = useRef(true);
 
   useEffect(() => {
     const updatePreview = () => {
@@ -54,7 +54,7 @@ export function PreviewFrame() {
         }
 
         if (files.size === 0) {
-          if (isFirstLoad) {
+          if (isFirstLoad.current) {
             setError("firstLoad");
           } else {
             setError("No files to preview");
@@ -63,8 +63,8 @@ export function PreviewFrame() {
         }
 
         // We have files, so it's no longer the first load
-        if (isFirstLoad) {
-          setIsFirstLoad(false);
+        if (isFirstLoad.current) {
+          isFirstLoad.current = false;
         }
 
         if (!foundEntryPoint || !files.has(foundEntryPoint)) {
@@ -96,7 +96,7 @@ export function PreviewFrame() {
     };
 
     updatePreview();
-  }, [refreshTrigger, getAllFiles, entryPoint, error, isFirstLoad]);
+  }, [refreshTrigger, getAllFiles, entryPoint]);
 
   if (error) {
     if (error === "firstLoad") {
